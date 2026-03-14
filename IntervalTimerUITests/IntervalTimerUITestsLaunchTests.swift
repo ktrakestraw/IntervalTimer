@@ -1,13 +1,13 @@
 //
-//  Interval_TimerUITestsLaunchTests.swift
-//  Interval TimerUITests
+//  IntervalTimerUITestsLaunchTests.swift
+//  IntervalTimerUITests
 //
 //  Created by Kevin Rakestraw on 3/14/26.
 //
 
 import XCTest
 
-final class Interval_TimerUITestsLaunchTests: XCTestCase {
+final class IntervalTimerUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

@@ -24,25 +24,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A4A2F192F66020F007CD036 /* Interval Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Interval Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A4A2F262F660212007CD036 /* Interval TimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Interval TimerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0A4A2F302F660212007CD036 /* Interval TimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Interval TimerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A4A2F192F66020F007CD036 /* IntervalTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntervalTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A4A2F262F660212007CD036 /* IntervalTimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntervalTimerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A4A2F302F660212007CD036 /* IntervalTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntervalTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		0A4A2F1B2F66020F007CD036 /* Interval Timer */ = {
+		0A4A2F1B2F66020F007CD036 /* IntervalTimer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Interval Timer";
+			path = IntervalTimer;
 			sourceTree = "<group>";
 		};
-		0A4A2F292F660212007CD036 /* Interval TimerTests */ = {
+		0A4A2F292F660212007CD036 /* IntervalTimerTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Interval TimerTests";
+			path = IntervalTimerTests;
 			sourceTree = "<group>";
 		};
-		0A4A2F332F660212007CD036 /* Interval TimerUITests */ = {
+		0A4A2F332F660212007CD036 /* IntervalTimerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Interval TimerUITests";
+			path = IntervalTimerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		0A4A2F102F66020F007CD036 = {
 			isa = PBXGroup;
 			children = (
-				0A4A2F1B2F66020F007CD036 /* Interval Timer */,
-				0A4A2F292F660212007CD036 /* Interval TimerTests */,
-				0A4A2F332F660212007CD036 /* Interval TimerUITests */,
+				0A4A2F1B2F66020F007CD036 /* IntervalTimer */,
+				0A4A2F292F660212007CD036 /* IntervalTimerTests */,
+				0A4A2F332F660212007CD036 /* IntervalTimerUITests */,
 				0A4A2F1A2F66020F007CD036 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		0A4A2F1A2F66020F007CD036 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A4A2F192F66020F007CD036 /* Interval Timer.app */,
-				0A4A2F262F660212007CD036 /* Interval TimerTests.xctest */,
-				0A4A2F302F660212007CD036 /* Interval TimerUITests.xctest */,
+				0A4A2F192F66020F007CD036 /* IntervalTimer.app */,
+				0A4A2F262F660212007CD036 /* IntervalTimerTests.xctest */,
+				0A4A2F302F660212007CD036 /* IntervalTimerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0A4A2F182F66020F007CD036 /* Interval Timer */ = {
+		0A4A2F182F66020F007CD036 /* IntervalTimer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A4A2F3A2F660212007CD036 /* Build configuration list for PBXNativeTarget "Interval Timer" */;
+			buildConfigurationList = 0A4A2F3A2F660212007CD036 /* Build configuration list for PBXNativeTarget "IntervalTimer" */;
 			buildPhases = (
 				0A4A2F152F66020F007CD036 /* Sources */,
 				0A4A2F162F66020F007CD036 /* Frameworks */,
@@ -108,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				0A4A2F1B2F66020F007CD036 /* Interval Timer */,
+				0A4A2F1B2F66020F007CD036 /* IntervalTimer */,
 			);
-			name = "Interval Timer";
+			name = IntervalTimer;
 			packageProductDependencies = (
 			);
 			productName = "Interval Timer";
-			productReference = 0A4A2F192F66020F007CD036 /* Interval Timer.app */;
+			productReference = 0A4A2F192F66020F007CD036 /* IntervalTimer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0A4A2F252F660212007CD036 /* Interval TimerTests */ = {
+		0A4A2F252F660212007CD036 /* IntervalTimerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A4A2F3D2F660212007CD036 /* Build configuration list for PBXNativeTarget "Interval TimerTests" */;
+			buildConfigurationList = 0A4A2F3D2F660212007CD036 /* Build configuration list for PBXNativeTarget "IntervalTimerTests" */;
 			buildPhases = (
 				0A4A2F222F660212007CD036 /* Sources */,
 				0A4A2F232F660212007CD036 /* Frameworks */,
@@ -131,18 +131,18 @@
 				0A4A2F282F660212007CD036 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0A4A2F292F660212007CD036 /* Interval TimerTests */,
+				0A4A2F292F660212007CD036 /* IntervalTimerTests */,
 			);
-			name = "Interval TimerTests";
+			name = IntervalTimerTests;
 			packageProductDependencies = (
 			);
 			productName = "Interval TimerTests";
-			productReference = 0A4A2F262F660212007CD036 /* Interval TimerTests.xctest */;
+			productReference = 0A4A2F262F660212007CD036 /* IntervalTimerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0A4A2F2F2F660212007CD036 /* Interval TimerUITests */ = {
+		0A4A2F2F2F660212007CD036 /* IntervalTimerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0A4A2F402F660212007CD036 /* Build configuration list for PBXNativeTarget "Interval TimerUITests" */;
+			buildConfigurationList = 0A4A2F402F660212007CD036 /* Build configuration list for PBXNativeTarget "IntervalTimerUITests" */;
 			buildPhases = (
 				0A4A2F2C2F660212007CD036 /* Sources */,
 				0A4A2F2D2F660212007CD036 /* Frameworks */,
@@ -154,13 +154,13 @@
 				0A4A2F322F660212007CD036 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				0A4A2F332F660212007CD036 /* Interval TimerUITests */,
+				0A4A2F332F660212007CD036 /* IntervalTimerUITests */,
 			);
-			name = "Interval TimerUITests";
+			name = IntervalTimerUITests;
 			packageProductDependencies = (
 			);
 			productName = "Interval TimerUITests";
-			productReference = 0A4A2F302F660212007CD036 /* Interval TimerUITests.xctest */;
+			productReference = 0A4A2F302F660212007CD036 /* IntervalTimerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0A4A2F142F66020F007CD036 /* Build configuration list for PBXProject "Interval Timer" */;
+			buildConfigurationList = 0A4A2F142F66020F007CD036 /* Build configuration list for PBXProject "IntervalTimer" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -200,9 +200,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0A4A2F182F66020F007CD036 /* Interval Timer */,
-				0A4A2F252F660212007CD036 /* Interval TimerTests */,
-				0A4A2F2F2F660212007CD036 /* Interval TimerUITests */,
+				0A4A2F182F66020F007CD036 /* IntervalTimer */,
+				0A4A2F252F660212007CD036 /* IntervalTimerTests */,
+				0A4A2F2F2F660212007CD036 /* IntervalTimerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		0A4A2F282F660212007CD036 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0A4A2F182F66020F007CD036 /* Interval Timer */;
+			target = 0A4A2F182F66020F007CD036 /* IntervalTimer */;
 			targetProxy = 0A4A2F272F660212007CD036 /* PBXContainerItemProxy */;
 		};
 		0A4A2F322F660212007CD036 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0A4A2F182F66020F007CD036 /* Interval Timer */;
+			target = 0A4A2F182F66020F007CD036 /* IntervalTimer */;
 			targetProxy = 0A4A2F312F660212007CD036 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -456,7 +456,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Interval Timer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Interval Timer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IntervalTimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/IntervalTimer";
 			};
 			name = Debug;
 		};
@@ -474,7 +474,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Interval Timer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Interval Timer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IntervalTimer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/IntervalTimer";
 			};
 			name = Release;
 		};
@@ -513,7 +513,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A4A2F142F66020F007CD036 /* Build configuration list for PBXProject "Interval Timer" */ = {
+		0A4A2F142F66020F007CD036 /* Build configuration list for PBXProject "IntervalTimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A4A2F382F660212007CD036 /* Debug */,
@@ -522,7 +522,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A4A2F3A2F660212007CD036 /* Build configuration list for PBXNativeTarget "Interval Timer" */ = {
+		0A4A2F3A2F660212007CD036 /* Build configuration list for PBXNativeTarget "IntervalTimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A4A2F3B2F660212007CD036 /* Debug */,
@@ -531,7 +531,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A4A2F3D2F660212007CD036 /* Build configuration list for PBXNativeTarget "Interval TimerTests" */ = {
+		0A4A2F3D2F660212007CD036 /* Build configuration list for PBXNativeTarget "IntervalTimerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A4A2F3E2F660212007CD036 /* Debug */,
@@ -540,7 +540,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0A4A2F402F660212007CD036 /* Build configuration list for PBXNativeTarget "Interval TimerUITests" */ = {
+		0A4A2F402F660212007CD036 /* Build configuration list for PBXNativeTarget "IntervalTimerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A4A2F412F660212007CD036 /* Debug */,
