@@ -2,9 +2,10 @@ import Foundation
 import Combine
 
 struct PhaseSpec {
-    let label: String   // "Work" / "Rest"
+    let label: String   // Interval name
     let detail: String  // "Rep 2/10 · Set 1/2"
     let duration: TimeInterval
+    let color: String   // "#RRGGBBAA"
 }
 
 enum TimerState {
@@ -123,16 +124,12 @@ class TimerEngine: ObservableObject {
         for (si, set) in workout.sets.enumerated() {
             let reps = max(1, set.repetitions)
             for rep in 1...reps {
-                specs.append(PhaseSpec(
-                    label: "Work",
-                    detail: "Rep \(rep)/\(reps)  ·  Set \(si + 1)/\(totalSets)",
-                    duration: set.workDuration
-                ))
-                if set.restDuration > 0 {
+                for interval in set.intervals {
                     specs.append(PhaseSpec(
-                        label: "Rest",
+                        label: interval.name,
                         detail: "Rep \(rep)/\(reps)  ·  Set \(si + 1)/\(totalSets)",
-                        duration: set.restDuration
+                        duration: interval.duration,
+                        color: interval.color
                     ))
                 }
             }

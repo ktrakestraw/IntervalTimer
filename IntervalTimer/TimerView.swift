@@ -11,26 +11,47 @@ struct TimerView: View {
         _engine = StateObject(wrappedValue: e)
     }
 
+    private var backgroundColor: Color {
+        guard engine.state == .running || engine.state == .paused,
+              let phase = engine.currentPhase
+        else { return Color(.systemBackground) }
+        return Color(hex: phase.color) ?? Color(.systemBackground)
+    }
+
+    /// Returns white or black depending on which has better contrast against `backgroundColor`.
+    private var foregroundColor: Color {
+        guard engine.state == .running || engine.state == .paused,
+              let phase = engine.currentPhase,
+              let uiColor = UIColor(hex: phase.color)
+        else { return Color(.label) }
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+        // Relative luminance (WCAG)
+        let luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
+        return luminance > 0.35 ? .black : .white
+    }
+
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
+        ZStack {
+            backgroundColor
+                .ignoresSafeArea()
+                .animation(.easeInOut(duration: 0.4), value: backgroundColor)
 
-            phaseDisplay
-
-            timeDisplay
-
-            progressBar
-
-            controls
-
-            Spacer()
+            VStack(spacing: 32) {
+                Spacer()
+                phaseDisplay
+                timeDisplay
+                progressBar
+                controls
+                Spacer()
+            }
+            .padding()
+            .foregroundStyle(foregroundColor)
+            .animation(.easeInOut(duration: 0.4), value: foregroundColor)
         }
-        .padding()
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
-                engine.syncToCurrentTime()
-            }
+            if newPhase == .active { engine.syncToCurrentTime() }
         }
     }
 
@@ -41,7 +62,6 @@ struct TimerView: View {
             VStack(spacing: 8) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 64))
-                    .foregroundStyle(.green)
                 Text("Done!")
                     .font(.largeTitle.bold())
             }
@@ -61,10 +81,9 @@ struct TimerView: View {
                 VStack(spacing: 8) {
                     Text(phase.label)
                         .font(.system(size: 48, weight: .bold))
-                        .foregroundStyle(phase.label == "Work" ? Color.red : Color.blue)
                     Text(phase.detail)
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(foregroundColor.opacity(0.7))
                 }
             }
         }
@@ -82,7 +101,7 @@ struct TimerView: View {
         let progress = total > 0 ? Double(current) / Double(total) : 0
 
         return ProgressView(value: progress)
-            .tint(engine.currentPhase?.label == "Work" ? .red : .blue)
+            .tint(foregroundColor)
             .animation(.linear(duration: 0.1), value: progress)
     }
 
@@ -110,7 +129,7 @@ struct TimerView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                .tint(.orange)
+                .tint(foregroundColor.opacity(0.2))
 
                 Button {
                     engine.stop()
@@ -120,7 +139,6 @@ struct TimerView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
-                .tint(.red)
 
             case .paused:
                 Button {
@@ -132,6 +150,7 @@ struct TimerView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+                .tint(foregroundColor.opacity(0.2))
 
                 Button {
                     engine.stop()
@@ -141,7 +160,6 @@ struct TimerView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
-                .tint(.red)
 
             case .finished:
                 Button {
@@ -153,7 +171,6 @@ struct TimerView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
-                .tint(.green)
             }
         }
     }
@@ -163,5 +180,29 @@ struct TimerView: View {
         let minutes = total / 60
         let seconds = total % 60
         return String(format: "%d:%02d", minutes, seconds)
+    }
+}
+
+private extension Color {
+    init?(hex: String) {
+        var int: UInt64 = 0
+        guard Scanner(string: hex).scanHexInt64(&int), hex.count == 8 else { return nil }
+        let r = Double((int >> 24) & 0xFF) / 255
+        let g = Double((int >> 16) & 0xFF) / 255
+        let b = Double((int >> 8)  & 0xFF) / 255
+        let a = Double( int        & 0xFF) / 255
+        self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
+    }
+}
+
+private extension UIColor {
+    convenience init?(hex: String) {
+        var int: UInt64 = 0
+        guard Scanner(string: hex).scanHexInt64(&int), hex.count == 8 else { return nil }
+        let r = CGFloat((int >> 24) & 0xFF) / 255
+        let g = CGFloat((int >> 16) & 0xFF) / 255
+        let b = CGFloat((int >> 8)  & 0xFF) / 255
+        let a = CGFloat( int        & 0xFF) / 255
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }

@@ -3,18 +3,24 @@ import Foundation
 struct Routine: Identifiable, Codable {
     var id = UUID()
     var name: String
-    var sets: [IntervalSet]
+    var sets: [Set]
 
     var totalDuration: TimeInterval {
-        sets.reduce(0) { $0 + TimeInterval($1.repetitions) * ($1.workDuration + $1.restDuration) }
+        sets.reduce(0) { $0 + TimeInterval($1.repetitions) * $1.intervals.reduce(0) { $0 + $1.duration } }
     }
 }
 
-struct IntervalSet: Identifiable, Codable {
+struct Set: Identifiable, Codable {
     var id = UUID()
-    var workDuration: TimeInterval  // seconds
-    var restDuration: TimeInterval  // seconds
+    var intervals: [Interval]
     var repetitions: Int
+}
+
+struct Interval: Identifiable, Codable {
+    var id = UUID()
+    var name: String
+    var duration: TimeInterval
+    var color: String // "#RRGGBBAA"
 }
 
 
