@@ -67,7 +67,7 @@ struct WorkoutListView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "timer")
-                .font(.system(size: 64))
+                .font(.displayIcon)
                 .foregroundStyle(.secondary)
             Text("No Workouts Yet")
                 .font(.title2.bold())

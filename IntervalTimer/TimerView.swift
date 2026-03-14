@@ -61,7 +61,7 @@ struct TimerView: View {
         case .finished:
             VStack(spacing: 8) {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 64))
+                    .font(.displayIcon)
                 Text("Done!")
                     .font(.largeTitle.bold())
             }
@@ -80,7 +80,7 @@ struct TimerView: View {
             if let phase = engine.currentPhase {
                 VStack(spacing: 8) {
                     Text(phase.label)
-                        .font(.system(size: 48, weight: .bold))
+                        .font(.timerPhaseLabel)
                     Text(phase.detail)
                         .font(.subheadline)
                         .foregroundStyle(foregroundColor.opacity(0.7))
@@ -91,7 +91,7 @@ struct TimerView: View {
 
     private var timeDisplay: some View {
         Text(formattedTime(engine.timeRemaining))
-            .font(.system(size: 80, weight: .thin, design: .monospaced))
+            .font(.timerCountdown)
             .contentTransition(.numericText())
     }
 
