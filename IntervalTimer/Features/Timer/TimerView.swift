@@ -5,9 +5,9 @@ struct TimerView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dismiss) private var dismiss
 
-    init(workout: Routine) {
+    init(routine: Routine) {
         let e = TimerEngine()
-        e.load(workout: workout)
+        e.load(routine: routine)
         _engine = StateObject(wrappedValue: e)
     }
 
@@ -180,29 +180,5 @@ struct TimerView: View {
         let minutes = total / 60
         let seconds = total % 60
         return String(format: "%d:%02d", minutes, seconds)
-    }
-}
-
-private extension Color {
-    init?(hex: String) {
-        var int: UInt64 = 0
-        guard Scanner(string: hex).scanHexInt64(&int), hex.count == 8 else { return nil }
-        let r = Double((int >> 24) & 0xFF) / 255
-        let g = Double((int >> 16) & 0xFF) / 255
-        let b = Double((int >> 8)  & 0xFF) / 255
-        let a = Double( int        & 0xFF) / 255
-        self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
-    }
-}
-
-private extension UIColor {
-    convenience init?(hex: String) {
-        var int: UInt64 = 0
-        guard Scanner(string: hex).scanHexInt64(&int), hex.count == 8 else { return nil }
-        let r = CGFloat((int >> 24) & 0xFF) / 255
-        let g = CGFloat((int >> 16) & 0xFF) / 255
-        let b = CGFloat((int >> 8)  & 0xFF) / 255
-        let a = CGFloat( int        & 0xFF) / 255
-        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var store = WorkoutStore()
+    @StateObject private var store = RoutineStore()
 
     var body: some View {
-        WorkoutListView()
+        RoutineListView()
             .environmentObject(store)
     }
 }

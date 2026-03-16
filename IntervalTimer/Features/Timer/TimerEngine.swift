@@ -27,8 +27,8 @@ class TimerEngine: ObservableObject {
         return phases[currentPhaseIndex]
     }
 
-    func load(workout: Routine) {
-        phases = Self.buildPhases(from: workout)
+    func load(routine: Routine) {
+        phases = Self.buildPhases(from: routine)
         currentPhaseIndex = 0
         timeRemaining = phases.first?.duration ?? 0
         state = .idle
@@ -118,11 +118,11 @@ class TimerEngine: ObservableObject {
         }
     }
 
-    static func buildPhases(from workout: Routine) -> [PhaseSpec] {
+    static func buildPhases(from routine: Routine) -> [PhaseSpec] {
         var specs: [PhaseSpec] = []
-        let totalSets = workout.sets.count
-        for (si, set) in workout.sets.enumerated() {
-            let reps = max(1, set.repetitions)
+        let totalSets = routine.sets.count
+        for (si, set) in routine.sets.enumerated() {
+            let reps = max(1, set.reps)
             for rep in 1...reps {
                 for interval in set.intervals {
                     specs.append(PhaseSpec(

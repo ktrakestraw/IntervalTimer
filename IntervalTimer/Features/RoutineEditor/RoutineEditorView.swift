@@ -1,18 +1,21 @@
 import SwiftUI
 
-struct WorkoutEditorView: View {
+struct RoutineEditorView: View {
     @Environment(\.dismiss) private var dismiss
 
     var onSave: (Routine) -> Void
 
-    @State private var workout: Routine
+    @State private var routine: Routine
 
-    init(workout: Routine? = nil, onSave: @escaping (Routine) -> Void) {
-        _workout = State(initialValue: workout ?? Routine(name: "", sets: [
+    init(routine: Routine? = nil, onSave: @escaping (Routine) -> Void) {
+        _routine = State(initialValue: routine ?? Routine(name: "", sets: [
             Set(intervals: [
-                Interval(name: "Work", duration: 30, color: "FF3B30FF"),
-                Interval(name: "Rest", duration: 30, color: "34C759FF")
-            ], repetitions: 10)
+                Interval(name: "Warm Up", duration: 30, color: "34C759FF")
+            ], reps: 1)
+             Set(intervals: [
+                Interval(name: "On", duration: 30, color: "FF3B30FF"),
+                Interval(name: "Off", duration: 30, color: "34C759FF")
+            ], reps: 10)
         ]))
         self.onSave = onSave
     }
@@ -21,27 +24,30 @@ struct WorkoutEditorView: View {
         NavigationStack {
             Form {
                 Section("Name") {
-                    TextField("Workout name", text: $workout.name)
+                    TextField("Routine name", text: $routine.name)
                 }
 
                 Section("Sets") {
-                    ForEach($workout.sets) { $set in
+                    ForEach($routine.sets) { $set in
                         IntervalSetRow(set: $set)
                     }
-                    .onDelete { workout.sets.remove(atOffsets: $0) }
-                    .onMove { workout.sets.move(fromOffsets: $0, toOffset: $1) }
+                    .onDelete { routine.sets.remove(atOffsets: $0) }
+                    .onMove { routine.sets.move(fromOffsets: $0, toOffset: $1) }
 
                     Button {
-                        workout.sets.append(Set(intervals: [
-                            Interval(name: "Work", duration: 30, color: "FF3B30FF"),
-                            Interval(name: "Rest", duration: 30, color: "34C759FF")
-                        ], repetitions: 10))
+                        routine.sets.append(Set(intervals: [
+                            Interval(name: "Warm Up", duration: 30, color: "34C759FF")
+                        ], reps: 1))
+                        routine.sets.append(Set(intervals: [
+                            Interval(name: "On", duration: 30, color: "FF3B30FF"),
+                            Interval(name: "Off", duration: 30, color: "34C759FF")
+                        ], reps: 10))
                     } label: {
                         Label("Add Set", systemImage: "plus")
                     }
                 }
             }
-            .navigationTitle(workout.name.isEmpty ? "New Workout" : workout.name)
+            .navigationTitle(routine.name.isEmpty ? "New Routine" : routine.name)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -49,10 +55,10 @@ struct WorkoutEditorView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        onSave(workout)
+                        onSave(routine)
                         dismiss()
                     }
-                    .disabled(workout.name.isEmpty || workout.sets.isEmpty)
+                    .disabled(routine.name.isEmpty || routine.sets.isEmpty)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
@@ -67,7 +73,7 @@ struct IntervalSetRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Stepper("Reps: \(set.repetitions)", value: $set.repetitions, in: 1...99)
+            Stepper("Reps: \(set.reps)", value: $set.reps, in: 1...99)
 
             ForEach($set.intervals) { $interval in
                 IntervalRow(interval: $interval)
@@ -131,24 +137,5 @@ struct DurationStepper: View {
             return s > 0 ? "\(m)m \(s)s" : "\(m)m"
         }
         return "\(s)s"
-    }
-}
-
-private extension Color {
-    init?(hex: String) {
-        var int: UInt64 = 0
-        guard Scanner(string: hex).scanHexInt64(&int), hex.count == 8 else { return nil }
-        let r = Double((int >> 24) & 0xFF) / 255
-        let g = Double((int >> 16) & 0xFF) / 255
-        let b = Double((int >> 8)  & 0xFF) / 255
-        let a = Double( int        & 0xFF) / 255
-        self.init(.sRGB, red: r, green: g, blue: b, opacity: a)
-    }
-
-    var hexString: String {
-        let c = UIColor(self).cgColor.components ?? [0, 0, 0, 1]
-        let r = c[0], g = c[1], b = c[2], a = c.count > 3 ? c[3] : 1
-        return String(format: "%02X%02X%02X%02X",
-            Int(r * 255), Int(g * 255), Int(b * 255), Int(a * 255))
     }
 }

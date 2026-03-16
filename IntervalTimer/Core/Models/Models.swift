@@ -6,14 +6,14 @@ struct Routine: Identifiable, Codable {
     var sets: [Set]
 
     var totalDuration: TimeInterval {
-        sets.reduce(0) { $0 + TimeInterval($1.repetitions) * $1.intervals.reduce(0) { $0 + $1.duration } }
+        sets.reduce(0) { $0 + TimeInterval($1.reps) * $1.intervals.reduce(0) { $0 + $1.duration } }
     }
 }
 
 struct Set: Identifiable, Codable {
     var id = UUID()
     var intervals: [Interval]
-    var repetitions: Int
+    var reps: Int
 }
 
 struct Interval: Identifiable, Codable {
@@ -24,31 +24,31 @@ struct Interval: Identifiable, Codable {
 }
 
 
-class WorkoutStore: ObservableObject {
-    @Published var workouts: [Routine] = []
+class RoutineStore: ObservableObject {
+    @Published var routines: [Routine] = []
 
-    private let key = "saved_workouts"
+    private let key = "saved_routines"
 
     init() { load() }
 
-    func add(_ workout: Routine) {
-        workouts.append(workout)
+    func add(_ routine: Routine) {
+        routines.append(routine)
         save()
     }
 
-    func update(_ workout: Routine) {
-        guard let i = workouts.firstIndex(where: { $0.id == workout.id }) else { return }
-        workouts[i] = workout
+    func update(_ routine: Routine) {
+        guard let i = routines.firstIndex(where: { $0.id == routine.id }) else { return }
+        routines[i] = routine
         save()
     }
 
     func delete(at offsets: IndexSet) {
-        workouts.remove(atOffsets: offsets)
+        routines.remove(atOffsets: offsets)
         save()
     }
 
     private func save() {
-        if let data = try? JSONEncoder().encode(workouts) {
+        if let data = try? JSONEncoder().encode(routines) {
             UserDefaults.standard.set(data, forKey: key)
         }
     }
@@ -58,6 +58,6 @@ class WorkoutStore: ObservableObject {
             let data = UserDefaults.standard.data(forKey: key),
             let decoded = try? JSONDecoder().decode([Routine].self, from: data)
         else { return }
-        workouts = decoded
+        routines = decoded
     }
 }

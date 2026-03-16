@@ -1,24 +1,24 @@
 import SwiftUI
 
-struct WorkoutListView: View {
-    @EnvironmentObject var store: WorkoutStore
+struct RoutineListView: View {
+    @EnvironmentObject var store: RoutineStore
     @State private var showingEditor = false
-    @State private var editingWorkout: Routine? = nil
+    @State private var editingRoutine: Routine? = nil
 
     var body: some View {
         NavigationStack {
             Group {
-                if store.workouts.isEmpty {
+                if store.routines.isEmpty {
                     emptyState
                 } else {
                     list
                 }
             }
-            .navigationTitle("Workouts")
+            .navigationTitle("Routines")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        editingWorkout = nil
+                        editingRoutine = nil
                         showingEditor = true
                     } label: {
                         Image(systemName: "plus")
@@ -26,8 +26,8 @@ struct WorkoutListView: View {
                 }
             }
             .sheet(isPresented: $showingEditor) {
-                WorkoutEditorView(workout: editingWorkout) { saved in
-                    if editingWorkout != nil {
+                RoutineEditorView(routine: editingRoutine) { saved in
+                    if editingRoutine != nil {
                         store.update(saved)
                     } else {
                         store.add(saved)
@@ -39,13 +39,13 @@ struct WorkoutListView: View {
 
     private var list: some View {
         List {
-            ForEach(store.workouts) { workout in
-                NavigationLink(destination: TimerView(workout: workout)) {
-                    WorkoutRow(workout: workout)
+            ForEach(store.routines) { routine in
+                NavigationLink(destination: TimerView(routine: routine)) {
+                    RoutineRow(routine: routine)
                 }
                 .swipeActions(edge: .trailing) {
                     Button(role: .destructive) {
-                        if let i = store.workouts.firstIndex(where: { $0.id == workout.id }) {
+                        if let i = store.routines.firstIndex(where: { $0.id == routine.id }) {
                             store.delete(at: IndexSet(integer: i))
                         }
                     } label: {
@@ -53,7 +53,7 @@ struct WorkoutListView: View {
                     }
 
                     Button {
-                        editingWorkout = workout
+                        editingRoutine = routine
                         showingEditor = true
                     } label: {
                         Label("Edit", systemImage: "pencil")
@@ -69,11 +69,11 @@ struct WorkoutListView: View {
             Image(systemName: "timer")
                 .font(.displayIcon)
                 .foregroundStyle(.secondary)
-            Text("No Workouts Yet")
+            Text("No Routines Yet")
                 .font(.title2.bold())
-            Text("Tap + to create your first workout")
+            Text("Tap + to create your first routine")
                 .foregroundStyle(.secondary)
-            Button("Create Workout") {
+            Button("Create Routine") {
                 showingEditor = true
             }
             .buttonStyle(.borderedProminent)
@@ -81,16 +81,16 @@ struct WorkoutListView: View {
     }
 }
 
-struct WorkoutRow: View {
-    let workout: Routine
+struct RoutineRow: View {
+    let routine: Routine
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(workout.name)
+            Text(routine.name)
                 .font(.headline)
             HStack(spacing: 12) {
-                Label("\(workout.sets.count) set\(workout.sets.count == 1 ? "" : "s")", systemImage: "list.bullet")
-                Label(formattedDuration(workout.totalDuration), systemImage: "clock")
+                Label("\(routine.sets.count) set\(routine.sets.count == 1 ? "" : "s")", systemImage: "list.bullet")
+                Label(formattedDuration(routine.totalDuration), systemImage: "clock")
             }
             .font(.caption)
             .foregroundStyle(.secondary)

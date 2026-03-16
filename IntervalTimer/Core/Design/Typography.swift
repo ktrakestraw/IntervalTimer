@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension Font {
-    /// Large countdown clock displayed during a workout phase.
+    /// Large countdown clock displayed during a routine phase.
     static let timerCountdown = Font.system(size: 80, weight: .bold).monospacedDigit()
 
     /// Phase name shown above the countdown (e.g. "Work", "Rest").
