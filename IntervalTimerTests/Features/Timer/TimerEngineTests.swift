@@ -2,6 +2,126 @@ import Foundation
 import Testing
 @testable import IntervalTimer
 
+// MARK: - TimerEngine state machine
+
+@Suite("TimerEngine state")
+struct TimerEngineStateTests {
+
+    private func makeEngine(reps: Int = 2, intervals: Int = 2) -> TimerEngine {
+        let intervalList = (0..<intervals).map { makeInterval(name: "Phase \($0)", duration: 30) }
+        let routine = makeRoutine(sets: [makeSet(intervals: intervalList, reps: reps)])
+        let engine = TimerEngine()
+        engine.load(routine: routine)
+        return engine
+    }
+
+    @Test("load sets state to idle")
+    func loadSetsIdle() {
+        let engine = makeEngine()
+        #expect(engine.state == .idle)
+    }
+
+    @Test("load sets timeRemaining to first phase duration")
+    func loadSetsTimeRemaining() {
+        let engine = makeEngine()
+        #expect(engine.timeRemaining == 30)
+    }
+
+    @Test("load populates phases")
+    func loadPopulatesPhases() {
+        let engine = makeEngine(reps: 2, intervals: 2)
+        #expect(engine.phases.count == 4) // 2 reps × 2 intervals
+    }
+
+    @Test("start transitions to running")
+    func startTransitionsToRunning() {
+        let engine = makeEngine()
+        engine.start()
+        #expect(engine.state == .running)
+    }
+
+    @Test("start resets to first phase")
+    func startResetsToFirstPhase() {
+        let engine = makeEngine()
+        engine.start()
+        #expect(engine.currentPhaseIndex == 0)
+    }
+
+    @Test("start on empty routine does nothing")
+    func startOnEmptyRoutine() {
+        let engine = TimerEngine()
+        engine.load(routine: makeRoutine(sets: []))
+        engine.start()
+        #expect(engine.state == .idle)
+    }
+
+    @Test("pause transitions to paused")
+    func pauseTransitionsToPaused() {
+        let engine = makeEngine()
+        engine.start()
+        engine.pause()
+        #expect(engine.state == .paused)
+    }
+
+    @Test("pause while idle does nothing")
+    func pauseWhileIdle() {
+        let engine = makeEngine()
+        engine.pause()
+        #expect(engine.state == .idle)
+    }
+
+    @Test("resume transitions back to running")
+    func resumeTransitionsToRunning() {
+        let engine = makeEngine()
+        engine.start()
+        engine.pause()
+        engine.resume()
+        #expect(engine.state == .running)
+    }
+
+    @Test("resume while running does nothing")
+    func resumeWhileRunning() {
+        let engine = makeEngine()
+        engine.start()
+        engine.resume() // should be a no-op
+        #expect(engine.state == .running)
+    }
+
+    @Test("stop transitions to idle")
+    func stopTransitionsToIdle() {
+        let engine = makeEngine()
+        engine.start()
+        engine.stop()
+        #expect(engine.state == .idle)
+    }
+
+    @Test("stop from paused transitions to idle")
+    func stopFromPausedTransitionsToIdle() {
+        let engine = makeEngine()
+        engine.start()
+        engine.pause()
+        engine.stop()
+        #expect(engine.state == .idle)
+    }
+
+    @Test("syncToCurrentTime does nothing when idle")
+    func syncWhileIdle() {
+        let engine = makeEngine()
+        engine.syncToCurrentTime()
+        #expect(engine.state == .idle)
+        #expect(engine.currentPhaseIndex == 0)
+    }
+
+    @Test("syncToCurrentTime does nothing when paused")
+    func syncWhilePaused() {
+        let engine = makeEngine()
+        engine.start()
+        engine.pause()
+        engine.syncToCurrentTime()
+        #expect(engine.state == .paused)
+    }
+}
+
 // MARK: - TimerEngine.buildPhases
 
 @Suite("TimerEngine.buildPhases")

@@ -27,9 +27,13 @@ struct Interval: Identifiable, Codable {
 class RoutineStore: ObservableObject {
     @Published var routines: [Routine] = []
 
+    private let defaults: UserDefaults
     private let key = "saved_routines"
 
-    init() { load() }
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        load()
+    }
 
     func add(_ routine: Routine) {
         routines.append(routine)
@@ -49,13 +53,13 @@ class RoutineStore: ObservableObject {
 
     private func save() {
         if let data = try? JSONEncoder().encode(routines) {
-            UserDefaults.standard.set(data, forKey: key)
+            defaults.set(data, forKey: key)
         }
     }
 
     private func load() {
         guard
-            let data = UserDefaults.standard.data(forKey: key),
+            let data = defaults.data(forKey: key),
             let decoded = try? JSONDecoder().decode([Routine].self, from: data)
         else { return }
         routines = decoded

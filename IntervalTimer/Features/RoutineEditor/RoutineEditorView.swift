@@ -11,7 +11,7 @@ struct RoutineEditorView: View {
         _routine = State(initialValue: routine ?? Routine(name: "", sets: [
             Set(intervals: [
                 Interval(name: "Warm Up", duration: 30, color: "34C759FF")
-            ], reps: 1)
+            ], reps: 1),
              Set(intervals: [
                 Interval(name: "On", duration: 30, color: "FF3B30FF"),
                 Interval(name: "Off", duration: 30, color: "34C759FF")

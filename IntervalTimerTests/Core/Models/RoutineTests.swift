@@ -60,10 +60,16 @@ struct RoutineTotalDurationTests {
 @Suite("RoutineStore")
 struct RoutineStoreTests {
 
+    /// Each test gets its own isolated UserDefaults suite so tests can't bleed into each other
+    /// or pick up leftover data from previous runs.
+    private func makeStore() -> RoutineStore {
+        let defaults = UserDefaults(suiteName: "test.\(UUID().uuidString)")!
+        return RoutineStore(defaults: defaults)
+    }
+
     @Test("add appends a routine")
     func add() {
-        let store = RoutineStore()
-        store.routines = []
+        let store = makeStore()
         let routine = makeRoutine(sets: [])
         store.add(routine)
         #expect(store.routines.count == 1)
@@ -72,7 +78,7 @@ struct RoutineStoreTests {
 
     @Test("update replaces existing routine by id")
     func update() {
-        let store = RoutineStore()
+        let store = makeStore()
         var routine = makeRoutine(sets: [], name: "Original")
         store.routines = [routine]
         routine.name = "Updated"
@@ -82,7 +88,7 @@ struct RoutineStoreTests {
 
     @Test("update ignores unknown id")
     func updateUnknownId() {
-        let store = RoutineStore()
+        let store = makeStore()
         store.routines = [makeRoutine(sets: [], name: "Existing")]
         let stranger = makeRoutine(sets: [], name: "Stranger")
         store.update(stranger)
@@ -92,12 +98,27 @@ struct RoutineStoreTests {
 
     @Test("delete removes routine at offset")
     func delete() {
-        let store = RoutineStore()
+        let store = makeStore()
         let a = makeRoutine(sets: [], name: "A")
         let b = makeRoutine(sets: [], name: "B")
         store.routines = [a, b]
         store.delete(at: IndexSet(integer: 0))
         #expect(store.routines.count == 1)
         #expect(store.routines[0].name == "B")
+    }
+
+    @Test("saved routines survive store reload")
+    func persistenceRoundTrip() {
+        let suiteName = "test.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+
+        let store = RoutineStore(defaults: defaults)
+        store.add(makeRoutine(sets: [makeSet(intervals: [makeInterval(duration: 45)])], name: "Saved"))
+
+        // Simulate app restart by creating a fresh store backed by the same UserDefaults
+        let reloaded = RoutineStore(defaults: defaults)
+        #expect(reloaded.routines.count == 1)
+        #expect(reloaded.routines[0].name == "Saved")
+        #expect(reloaded.routines[0].sets[0].intervals[0].duration == 45)
     }
 }
